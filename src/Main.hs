@@ -1,18 +1,8 @@
 module Main where
 
-import qualified Data.ByteString.Lazy as BL
-import qualified Data.Vector as Vector
---from cassava
-import Data.Csv 
+import Bassbull
 
-type BaseballStats = (BL.ByteString,Int,BL.ByteString,Int)
-
-main :: IO()
+main::IO()
 main = do
-    csvData <- BL.readFile "batting.csv"
-    let v = decode NoHeader csvData :: Either String (V.Vector BaseballStats)
-    let summed = fmap (V.foldr summer 0) v
+    summed <- getAtBatsSum "batting.csv"
     putStrLn $ "Total atBats was: " ++ (show summed)
-    where summer (name,year,team,atBats) n = n + atBats
-    
-
